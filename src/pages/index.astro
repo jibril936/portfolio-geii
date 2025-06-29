@@ -1,15 +1,38 @@
 ---
+import { getCollection } from 'astro:content';
+const projects = await getCollection('project');
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Portfolio – Ton Nom</title>
+  </head>
+
+  <body>
+    <h1>Mon portfolio GEII</h1>
+
+    <!-- >>> ICI la liste des projets <<< -->
+    <section id="projects" class="p-6">
+      <h2 class="text-2xl font-bold mb-4">Mes projets</h2>
+
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((p) => (
+          <li class="border rounded-xl p-4 shadow">
+            <h3 class="text-xl font-semibold mb-2">{p.data.title}</h3>
+            <p class="text-sm mb-3">{p.body}</p>
+
+            {p.data.github && (
+              <a href={p.data.github} class="text-indigo-600 underline">
+                Voir le code
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  </body>
 </html>
